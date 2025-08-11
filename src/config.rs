@@ -68,7 +68,14 @@ lazy_static::lazy_static! {
     pub static ref OVERWRITE_DISPLAY_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref DEFAULT_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref OVERWRITE_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
-    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
+    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = {
+        let mut m = HashMap::new();
+        m.insert("rendezvous_server".into(), "rust.northwoodscomputerguy.com:21116".into());
+        m.insert("custom-rendezvous-server".into(), "rust.northwoodscomputerguy.com".into());
+        m.insert("relay-server".into(), "rust.northwoodscomputerguy.com:21117".into());
+        m.insert("key".into(), RS_PUB_KEY.to_string());
+        RwLock::new(m)
+    };
     pub static ref BUILTIN_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
 }
 
